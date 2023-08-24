@@ -1,3 +1,5 @@
+#Entire code to be verified and accepted by @devkiraa and @TechnoTOG
+
 import os
 import csv
 import qrcode
@@ -13,3 +15,9 @@ import os
 from email.mime.base import MIMEBase
 from email import encoders
 import requests
+
+#Code to be Generated,modified and updated by @GowriParvathyy
+
+#Code to be Generated,modified and updated by @niranjana-2004
+
+#Code to be Generated,modified and updated by [Devananda]
