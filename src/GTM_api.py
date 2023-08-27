@@ -53,6 +53,7 @@ def generate_qr_code(data, filename):
             pbar.update(1)
 
     print("QR code generation completed.")
+    tgen()
 
 #--------Code block for "Ticket generation" to be Generated,modified and updated by @niranjana_2004--------
 
@@ -113,6 +114,7 @@ def tgen():
             pbar.update(1)
 
     print("Tickets generated and saved in the 'Ticket' folder.")
+    send_mail()
 
 #--------Code block for "Mailing Service" to be Generated,modified and updated by @Devaah07--------
 def send_mail():
@@ -132,3 +134,8 @@ def send_mail():
     else:
         print("Failed to send email")
         print("Response:", response.text)
+
+
+#Main function to be updated by @GowriParvathyy,@Niranjana_2004,@Devaah07
+if __name__ == "__main__":
+    generate_qr_code(data, filename)
