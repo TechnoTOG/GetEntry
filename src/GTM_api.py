@@ -56,6 +56,80 @@ def generate_qr_code(data, filename):
 
 #--------Code block for "Ticket generation" to be Generated,modified and updated by @niranjana_2004--------
 
+def tgen():
+    # Path to the folder containing QR code images
+    qr_images_folder = "QRImages"
 
+    # Path to the folder where you want to save the generated tickets
+    output_folder = "Ticket"
+
+    # Custom ticket design path (replace this with your path)
+    ticket_design_path = "custom_ticket.png"
+
+    # Ensure the output folder exists
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    # Load the custom ticket design
+    ticket_design = Image.open(ticket_design_path)
+
+    # Ticket size
+    ticket_width = ticket_design.width
+    ticket_height = ticket_design.height
+
+    # Calculate the size of the QR code based on the specified height
+    qr_size = (ticket_height // 2)-2
+
+    # Get a list of all QR code image files in the QRImages folder
+    qr_code_files = sorted(file for file in os.listdir(qr_images_folder) if file.endswith(".png"))
+
+    with tqdm(total=len(qr_code_files), desc="Generating Tickets") as pbar:
+        # Loop through each QR code image
+        for qr_file in qr_code_files:
+            # Construct the path to the QR code image
+            qr_code_path = os.path.join(qr_images_folder, qr_file)
+
+            # Load and resize the QR code
+            qr_code = Image.open(qr_code_path)
+            qr_code = qr_code.resize((qr_size, qr_size))
+
+            # Calculate the position to place the QR code at the bottom right
+            x = ticket_width - qr_size-80
+            y = ticket_height - qr_size-160
+
+            # Create a copy of the ticket design to avoid modifying the original
+            ticket_with_qr = ticket_design.copy()
+
+            # Paste the QR code onto the ticket copy
+            ticket_with_qr.paste(qr_code, (x, y))
+
+            # Construct the output path for the generated ticket
+            ticket_name = os.path.splitext(qr_file)[0] + "_ticket.png"
+            output_path = os.path.join(output_folder, ticket_name)
+
+            # Save the generated ticket image with QR code
+            ticket_with_qr.save(output_path)
+
+            pbar.update(1)
+
+    print("Tickets generated and saved in the 'Ticket' folder.")
 
 #--------Code block for "Mailing Service" to be Generated,modified and updated by @Devaah07--------
+
+def send_mail():
+    url = 'http://localhost:5000/send_email'
+
+    data = {
+        "subject": "Test Email",
+        "to_email": "tennyxavierkx@gmail.com",
+        "message": "This is a test email sent from the API.",
+        "attachment_path": "F:/Python/ticket gen/Ticket/qr_1_ticket.png"
+    }
+
+    response = requests.post(url, json=data)
+
+    if response.status_code == 200:
+        print("Email sent successfully")
+    else:
+        print("Failed to send email")
+        print("Response:", response.text)
