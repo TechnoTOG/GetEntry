@@ -1,4 +1,4 @@
-#Entire code to be verified and accepted by @devkiraa and @TechnoTOG
+#Entire code to be verified and accepted by @devkiraa, @TechnoTOG and 
 
 import os
 import csv
@@ -136,6 +136,6 @@ def send_mail():
         print("Response:", response.text)
 
 
-#Main function to be updated by @GowriParvathyy,@Niranjana_2004,@Devaah07
+#Main function to be updated by @GowriParvathyy, @Niranjana_2004 and @Devaah07
 if __name__ == "__main__":
     generate_qr_code(data, filename)
