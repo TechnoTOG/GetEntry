@@ -30,48 +30,16 @@ def generate_qr_code(data, filename):
     qr_img = qr.make_image(fill_color="black", back_color="white")
     qr_img.save(filename)
 
-    # Path to the folder where you want to save the generated QR
-    output_folder = "QRImages"
-
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
-
-    # Load data from CSV file
-    csv_file_path = "input.csv"  # Replace with your CSV file path
-    qr_data_list = []
-
-    with open(csv_file_path, "r") as csv_file:
-        csv_reader = csv.reader(csv_file)
-        next(csv_reader)  # Skip header row
-        for row in csv_reader:
-            qr_data_list.append(row[0])  # Assuming QR data is in the first column
-
-    with tqdm(total=len(qr_data_list), desc="Generating QR Codes") as pbar:
-        for qr_data in qr_data_list:
-            qr_code_filename = os.path.join(output_folder, f"qr_{pbar.n + 1}.png")
-            generate_qr_code(qr_data, qr_code_filename)
-            pbar.update(1)
-
-    print("QR code generation completed.")
-    tgen()
-
 #--------Code block for "Ticket generation" to be Generated,modified and updated by @niranjana_2004--------
 
 def tgen():
-    # Path to the folder containing QR code images
     qr_images_folder = "QRImages"
-
-    # Path to the folder where you want to save the generated tickets
-    output_folder = "Ticket"
-
-    # Custom ticket design path (replace this with your path)
+    ticket_output_folder = "Ticket"
     ticket_design_path = "custom_ticket.png"
 
-    # Ensure the output folder exists
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
+    if not os.path.exists(ticket_output_folder):
+        os.makedirs(ticket_output_folder)
 
-    # Load the custom ticket design
     ticket_design = Image.open(ticket_design_path)
 
     # Ticket size
@@ -106,11 +74,10 @@ def tgen():
 
             # Construct the output path for the generated ticket
             ticket_name = os.path.splitext(qr_file)[0] + "_ticket.png"
-            output_path = os.path.join(output_folder, ticket_name)
+            output_path = os.path.join(ticket_output_folder, ticket_name)
 
             # Save the generated ticket image with QR code
             ticket_with_qr.save(output_path)
-
             pbar.update(1)
 
     print("Tickets generated and saved in the 'Ticket' folder.")
@@ -135,7 +102,33 @@ def send_mail():
         print("Failed to send email")
         print("Response:", response.text)
 
-
 #Main function to be updated by @GowriParvathyy, @Niranjana_2004 and @Devaah07
+
+def main():
+    # Path to the folder where you want to save the generated QR
+    qr_output_folder = "QRImages"
+
+    if not os.path.exists(qr_output_folder):
+        os.makedirs(qr_output_folder)
+
+    # Load data from CSV file
+    csv_file_path = "input.csv"  # Replace with your CSV file path
+    qr_data_list = []
+
+    with open(csv_file_path, "r") as csv_file:
+        csv_reader = csv.reader(csv_file)
+        next(csv_reader)  # Skip header row
+        for row in csv_reader:
+            qr_data_list.append(row[0])  # Assuming QR data is in the first column
+
+    with tqdm(total=len(qr_data_list), desc="Generating QR Codes") as pbar:
+        for qr_data in qr_data_list:
+            qr_code_filename = os.path.join(qr_output_folder, f"qr_{pbar.n + 1}.png")
+            generate_qr_code(qr_data, qr_code_filename)
+            pbar.update(1)
+
+    print("QR code generation completed.")
+    tgen()
+
 if __name__ == "__main__":
-    generate_qr_code(data, filename)
+    main()
