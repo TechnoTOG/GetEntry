@@ -11,7 +11,7 @@ from email import encoders
 
 app = Flask(__name__)
 
-# Configure your email settings
+# Email app settings
 SMTP_SERVER = 'smtp.gmail.com'
 SMTP_PORT = 587
 SENDER_EMAIL = '[Your mail]'
