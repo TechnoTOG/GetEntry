@@ -1,4 +1,4 @@
-#Entire code to be verified and accepted by @devkiraa, @TechnoTOG and 
+#Entire code to be verified and accepted by @devkiraa, @TechnoTOG
 
 import os
 import csv
