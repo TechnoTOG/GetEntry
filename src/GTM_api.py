@@ -146,7 +146,6 @@ def main():
 
     print("QR code generation completed.")
     tgen()
-    print("hello")
 
 if __name__ == "__main__":
     main()
