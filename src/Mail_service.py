@@ -14,8 +14,8 @@ app = Flask(__name__)
 # Email app settings
 SMTP_SERVER = 'smtp.gmail.com'
 SMTP_PORT = 587
-SENDER_EMAIL = '[Your mail]'
-SENDER_PASSWORD = '[Your app password]'
+SENDER_EMAIL = 'tenny.smart@gmail.com'
+SENDER_PASSWORD = 'gfxfctjwwfzowocv'
 
 def send_email(subject, to_email, message, attachment_path=None):
     try:

@@ -1,9 +1,11 @@
-#Entire code to be verified and accepted by @devkiraa, @TechnoTOG
+#Entire code to be verified and accepted by @devkiraa, @TechnoTOG and 
 
 import os
 import csv
 import qrcode
 import random
+import glob
+import subprocess
 import string
 from tqdm import tqdm
 from PIL import Image
@@ -85,20 +87,27 @@ def tgen():
 
 #--------Code block for "Mailing Service" to be Generated,modified and updated by @Devaah07--------
 def send_mail():
+    try:
+        auto_mailer = "src\Mail_service.py"
+        auto_mail_process = subprocess.Popen(['python', auto_mailer])
+    except:
+        print("Unable to start Mail Service!!")
     url = 'http://localhost:5000/send_email'
 
     data = {
         "subject": "Test Email",
-        "to_email": "tennyxavierkx@gmail.com",
+        "to_email": "youaedrin@gmail.com",
         "message": "This is a test email sent from the API.",
-        "attachment_path": "F:/Python/ticket gen/Ticket/qr_1_ticket.png"
+        "attachment_path": "F:\TicketWave\TicketWave\Ticket\qr_1_ticket.png"
     }
 
     response = requests.post(url, json=data)
 
     if response.status_code == 200:
+        auto_mail_process.terminate()
         print("Email sent successfully")
     else:
+        auto_mail_process.terminate()
         print("Failed to send email")
         print("Response:", response.text)
 
@@ -111,8 +120,16 @@ def main():
     if not os.path.exists(qr_output_folder):
         os.makedirs(qr_output_folder)
 
-    # Load data from CSV file
-    csv_file_path = "input.csv"  # Replace with your CSV file path
+    # Find all CSV files in the current directory
+    csv_files = glob.glob("*.csv")
+
+    if len(csv_files) == 0:
+        print("No CSV files found in the current directory.")
+        exit()
+
+    # Assuming there is only one CSV file, you can take the first one
+    csv_file_path = csv_files[0]
+
     qr_data_list = []
 
     with open(csv_file_path, "r") as csv_file:
