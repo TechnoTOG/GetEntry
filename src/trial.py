@@ -6,10 +6,9 @@ import csv
 db_config = {
     'host': 'localhost',
     'user': 'scott',
-    'password': 'tiger123',
-    'database': 'sprint'
+    'password': 'password',
+    'database': 'getentry'
 }
-
 
 def main():
     # Path to the folder where you want to save the generated QR
@@ -38,11 +37,11 @@ def main():
         csv_reader = csv.reader(csv_file)
         next(csv_reader)  # Skip header row
         for row in csv_reader:
-            qr_data_list.append(row[0])  # Assuming QR data is in the first column
+            qr_data_list.append(row)  # Append the entire row to qr_data_list
 
-     # Insert data into the database
-        for row in csv_reader:
-            cursor.execute("INSERT INTO qr_codes (qr_id,roll_no,name,batch,event) VALUES (%s, %s, %s,%s,%s)", row)
+    # Insert data into the database
+    for row in qr_data_list:
+        cursor.execute("INSERT INTO qr_codes ( roll_no, name, batch, event) VALUES ( %s, %s, %s, %s)", row)
 
     # Commit changes and close the connection
     conn.commit()
